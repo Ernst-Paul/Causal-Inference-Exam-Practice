@@ -1,0 +1,152 @@
+---
+title: "Practice Question 1"
+author: "E P Swens"
+subtitle: "Causal Inference"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r echo=FALSE, fig.cap="Directed Acyclic Graph (Exposure X1, Outcome X5)", fig.height=4, fig.width=10, message=FALSE, warning=FALSE, dpi=300}
+library(ggplot2)
+library(dagitty)
+library(ggpubr)
+library(ggdag)
+
+# DAG 1
+dag1 <- dagify(
+   X1 ~ X2,
+   X2 ~ X1,
+   X3 ~ X2 + X4,
+   X5 ~ X1 + X3 + X4,
+   exposure = "X1",
+   outcome = "X5",
+   coords = list(x = c(X1 = 0, X2 = 0, X3 = 1, X4 = 2, X5 = 2),
+                 y = c(X1 = 0, X2 = 2, X3 = 1, X4 = 2, X5 = 0)))
+
+f1 <- ggdag_status(dag1) + 
+   guides(fill = "none", color = "none") + 
+   theme_dag()
+
+# DAG 2
+dag2 <- dagify(
+   X1 ~ X2,
+   X3 ~ X2 + X4,
+   X5 ~ X1 + X3 + X4,
+   exposure = "X1",
+   outcome = "X5",
+   coords = list(x = c(X1 = 0, X2 = 0, X3 = 1, X4 = 2, X5 = 2),
+                 y = c(X1 = 0, X2 = 2, X3 = 1, X4 = 2, X5 = 0)))
+
+f2 <- ggdag_status(dag2) + 
+   guides(fill = "none", color = "none") + 
+   theme_dag()
+
+# DAG 3
+dag3 <- dagify(
+   X1 ~ X2 + X5,
+   X3 ~ X2 + X4,
+   X5 ~ X3 + X4,
+   exposure = "X1",
+   outcome = "X5",
+   coords = list(x = c(X1 = 0, X2 = 0, X3 = 1, X4 = 2, X5 = 2),
+                 y = c(X1 = 0, X2 = 2, X3 = 1, X4 = 2, X5 = 0)))
+
+f3 <- ggdag_status(dag3) + 
+   guides(fill = "none", color = "none") + 
+   theme_dag()
+
+# combined figure
+ggarrange(f1, f2, f3, labels = c("A", "B", "C"), ncol = 3, nrow = 1)
+
+```
+
+### A. Directed Acyclic Graph
+
+In figure 1, which diagram represents a directed acyclic graph?
+
+A) A
+B) B
+C) C
+
+```{r include=FALSE}
+# B
+```
+
+
+### B. Continued 
+
+Why are the other options not DAG?
+
+```{r include=FALSE}
+# A Bi-directional 
+# C Cyclic
+```
+
+
+### C. Causal Paths
+
+What is the number of path(s) in the DAG of figure 1?
+
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+
+```{r include=FALSE}
+# D
+
+length(paths(dag2)$paths)
+```
+
+### D. Closed Paths
+
+How many of those path(s) are closed?
+
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+
+```{r include=FALSE}
+# C
+
+sum(paths(dag2)$open)
+```
+
+### E. Back-Door Criterion 
+
+How many paths adhere to the back-door criterion?
+
+A) 0
+B) 1
+C) 2
+D) 3
+E) 4
+
+```{r include=FALSE}
+# C
+
+length(adjustmentSets(dag2))
+```
+
+### F. Valid Adjustment Sets
+
+Which set(s) adhere to the back-door criterion? (Multiple options are possible)
+
+A) $\emptyset$
+B) $\{X_2\}$
+C) $\{X_3\}$
+D) $\{X_4\}$
+E) $\{X_2,X_3\}$
+F) $\{X_2,X_4\}$
+G) $\{X_3,X_4\}$
+H) $\{X_2,X_3,X_4\}$
+
+```{r include=FALSE}
+# B and G
+
+adjustmentSets(dag2)
+```
