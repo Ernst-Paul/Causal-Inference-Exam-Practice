@@ -1,5 +1,5 @@
 # Exam Practice Causal Inference 
-Practice Questions for the Causal Inference and Structural Equation Modeling Exam
+Hi :wave: Here are Practice Questions for the Causal Inference and Structural Equation Modeling Exam
 
 - PDF File contain the questions
 - Markdown File contain the solutions
