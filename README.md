@@ -5,5 +5,5 @@ Practice Questions for the Causal Inference and Structural Equation Modeling Exa
 - Markdown File contain the solutions
 
 Overview:
-- [Question 1](/Question-1/question-1.pdf)
-- [Question 2](/Question-1/question-2.pdf)
+- [Question 1](/Question-1/Question-1.pdf)
+- [Question 2](/Question-1/Question-2.pdf)
