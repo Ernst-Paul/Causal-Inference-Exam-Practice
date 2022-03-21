@@ -1,0 +1,202 @@
+---
+title: "Practice Question 3"
+author: "E P Swens"
+subtitle: "Causal Inference"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+### A. Sketch the Directed Acyclic Graph (DAG)
+
+Sketch (on paper or in `R`) the following DAG, representing our beliefs that:
+
+- `x1 causes x2`
+- `x1 causes x3`
+- `x2 causes x4`
+- `x4 causes x3`
+
+```{r include=FALSE}
+library(ggplot2)
+library(dagitty)
+library(ggdag)
+
+dag <- dagify(
+   X2 ~ X1,
+   X3 ~ X1 + X4,
+   X4 ~ X2,
+   exposure = "X1",
+   outcome = "X4")
+```
+
+
+### B. Identify the number of open path(s) 
+
+How many open path(s) are there?
+
+A) 0
+B) 1 
+C) 2
+D) 3
+
+```{r include=FALSE}
+# B
+
+sum(paths(dag)$open)
+```
+
+
+### C. Identify the number of backdoor path(s) 
+
+How many backdoor path(s) are there?
+
+A) 0
+B) 1 
+C) 2
+D) 3
+
+```{r include=FALSE}
+# A
+```
+
+
+### D. What is the valid adjustment set?
+
+What are the valid adjustment set(s)? (Multiple solutions are possible)
+
+A) $\emptyset$
+B) $\{X_2\}$
+C) $\{X_3\}$
+D) $\{X_2, X_3\}$
+
+```{r include=FALSE}
+# A
+
+adjustmentSets(dag, type = "all")
+```
+
+
+### E. Simulate the Data
+
+Simulate the data ($n = 10000$ with `set.seed(1)`) from the structural equations:  
+
+$$X_1 \sim \epsilon_1$$
+$$X_2 \sim -2 X_1 + \epsilon_2$$
+$$X_3 \sim 0.5X_1 + 0.5X_4 + \epsilon_3$$
+$$X_4 \sim -0.25X_2 + \epsilon_4$$
+
+where $\epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4 \sim \mathcal{N}(0,1)$ (i.i.d.)
+
+
+```{r include=FALSE}
+set.seed(1)
+
+n <- 10000
+
+x1 <- rnorm(n)
+x2 <- -2 * x1 + rnorm(n)
+x4 <- -0.25 * x2 + rnorm(n)
+x3 <- 0.5 * x1 + 0.5 * x4 + rnorm(n)
+
+data <- data.frame(x1 = x1, x2 = x2, x3 = x3, x4 = x4)
+```
+
+
+### F. Prima Facie Effect
+
+Provide the _prima facie effect_.
+
+```{r include=FALSE}
+summary(lm(x4 ~ x1, data = data))
+```
+
+
+### G. Prima Facie Effect
+
+The _prima facie effect_ shows unbiased effect of `x1` on `x4`, because:
+
+1. There are no blocked paths
+2. There are no backdoor paths
+
+A) No statements are true
+B) Statements 1 is true and statements 2 is false
+C) Statements 1 is false and statements 2 is true
+D) Both statements are true
+
+```{r include=FALSE}
+# C
+
+# There is a blocked path (X1 -> X3 <- X4) collider
+# There are no backdoor paths, hence no confounding
+```
+
+
+### H. Simpsons Paradox
+
+Show an example of a Simpsons Paradox with the use of the `lm` function. Discuss the result.
+
+```{r include=FALSE}
+summary(lm(x4 ~ x1 + x3, data = data))
+```
+
+```{r include=FALSE}
+# We see that the marginal relationship and conditional relationship are 
+# different - these generally do not have to be the same. Based on my initial 
+# DAG, I believe the variable we condition on is a collider variable (x3),
+# with the result here that x1 and x4 are conditionally dependent, but 
+# marginally independent.
+```
+
+
+### I. Berksons Bias
+
+Show an example of a Berksons Bias with the use of the `lm` function. Discuss the result.
+
+```{r include = FALSE}
+summary(lm(x4 ~ x1, data = data[data$x3 < 0.5,]))
+```
+
+```{r include=FALSE}
+# We observe that data where x3 < 0.5 shows a significant effect between x1 and
+# x4, similarly to the prima facie effect. However the magnitude between the 
+# effects differ, i.e. prima facie effect (beta = 0.5, se = 0.01) and Berkson
+# model (beta = 0.35, se = 0.01).
+```
+
+
+### J. The True Average Causal Effect
+
+Calculate the true causal effect by mimicking an intervention. 
+
+```{r include=FALSE}
+# set x1 equal to 1
+x1 <- 1
+x2 <- -2 * x1
+x4.1 <- -.25 * x2
+
+# set x1 equal to 0
+x1 <- 0
+x2 <- -2 * x1
+x4.0 <- -.25 * x2
+
+# ace
+x4.1 - x4.0
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
