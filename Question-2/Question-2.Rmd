@@ -15,6 +15,8 @@ Sketch (on paper or in `R`) the following DAG, representing our beliefs that:
 - `x1 causes x3`
 - `x2 causes x3`
 
+We are interested in the causal relationship between `x1` (exposure) and `x3` (outcome).
+
 ### B. Identify the number of open path(s) 
 
 How many open path(s) are there?
@@ -64,9 +66,9 @@ D) $\{X_2, X_3\}$
 
 Simulate the data ($n = 1000$ with `set.seed(1)`) from the structural equations:  
 
-$$X_1 \sim \mathcal{N}(0,1)$$
-$$X_2 \sim 2 X_1 + \mathcal{N}(0,1)$$
-$$X_3 \sim X_1 - 0.5X_2+ \mathcal{N}(0,1)$$
+$$X_1 \sim \epsilon_1$$
+$$X_2 \sim 2 X_1 + \epsilon_2$$
+$$X_3 \sim X_1 - 0.5X_2+ \epsilon_3$$
 
 where $\epsilon_1, \epsilon_2, \epsilon_3 \sim \mathcal{N}(0,1)$ (i.i.d.)
 
@@ -153,7 +155,7 @@ E) Strong ignorability
 ### J. In general, we do not worry about violation of this assumption, why?
 
 ```{r include=FALSE}
-# Competitive mediation effects which result in a total effect of 0 are rare
+# Competitive mediation effects which result in a total effect of 0 are not likely
 ```
 
 
