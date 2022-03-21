@@ -5,5 +5,6 @@ Hi :wave: Here are Practice Questions for the Causal Inference and Structural Eq
 - Markdown File contain the solutions
 
 Overview:
-- [Question 1](/Question-1/Question-1.pdf)
-- [Question 2](/Question-2/Question-2.pdf)
+- [Question 1 Just do a DAG](/Question-1/Question-1.pdf)
+- [Question 2 Assumption Violations](/Question-2/Question-2.pdf)
+- [Question 3 Paradoxes](/Question-2/Question-3.pdf)
