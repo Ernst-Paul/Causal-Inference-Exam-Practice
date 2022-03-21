@@ -58,7 +58,6 @@ f3 <- ggdag_status(dag3) +
 
 # combined figure
 ggarrange(f1, f2, f3, labels = c("A", "B", "C"), ncol = 3, nrow = 1)
-
 ```
 
 ### A. Directed Acyclic Graph
@@ -116,23 +115,8 @@ E) 4
 sum(paths(dag2)$open)
 ```
 
-### E. Back-Door Criterion 
 
-How many paths adhere to the back-door criterion?
-
-A) 0
-B) 1
-C) 2
-D) 3
-E) 4
-
-```{r include=FALSE}
-# C
-
-length(adjustmentSets(dag2))
-```
-
-### F. Valid Adjustment Sets
+### E. Valid Adjustment Sets
 
 Which set(s) adhere to the back-door criterion? (Multiple options are possible)
 
@@ -146,7 +130,7 @@ G) $\{X_3,X_4\}$
 H) $\{X_2,X_3,X_4\}$
 
 ```{r include=FALSE}
-# B and G
+# B, F, G, H
 
-adjustmentSets(dag2)
+adjustmentSets(dag2, type = "all")
 ```
