@@ -62,6 +62,8 @@ ggarrange(f1, f2, f3, labels = c("A", "B", "C"), ncol = 3, nrow = 1)
 
 ### A. Directed Acyclic Graph
 
+We are interested in the causal relationship between `x1` (exposure) and `x5` (outcome).
+
 In figure 1, which diagram represents a directed acyclic graph?
 
 A) A
