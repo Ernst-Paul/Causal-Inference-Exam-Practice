@@ -16,6 +16,8 @@ Sketch (on paper or in `R`) the following DAG, representing our beliefs that:
 - `x2 causes x4`
 - `x4 causes x3`
 
+We are interested in the causal relationship between `x1` (exposure) and `x4` (outcome).
+
 ```{r include=FALSE}
 library(ggplot2)
 library(dagitty)
@@ -46,21 +48,7 @@ sum(paths(dag)$open)
 ```
 
 
-### C. Identify the number of backdoor path(s) 
-
-How many backdoor path(s) are there?
-
-A) 0
-B) 1 
-C) 2
-D) 3
-
-```{r include=FALSE}
-# A
-```
-
-
-### D. What is the valid adjustment set?
+### C. What is the valid adjustment set?
 
 What are the valid adjustment set(s)? (Multiple solutions are possible)
 
@@ -76,7 +64,7 @@ adjustmentSets(dag, type = "all")
 ```
 
 
-### E. Simulate the Data
+### D. Simulate the Data
 
 Simulate the data ($n = 10000$ with `set.seed(1)`) from the structural equations:  
 
@@ -102,7 +90,7 @@ data <- data.frame(x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 ```
 
 
-### F. Prima Facie Effect
+### E. Prima Facie Effect
 
 Provide the _prima facie effect_.
 
@@ -111,7 +99,7 @@ summary(lm(x4 ~ x1, data = data))
 ```
 
 
-### G. Prima Facie Effect
+### F. Prima Facie Effect
 
 The _prima facie effect_ shows unbiased effect of `x1` on `x4`, because:
 
@@ -131,7 +119,7 @@ D) Both statements are true
 ```
 
 
-### H. Simpsons Paradox
+### G. Simpsons Paradox
 
 Show an example of a Simpsons Paradox with the use of the `lm` function. Discuss the result.
 
@@ -148,7 +136,7 @@ summary(lm(x4 ~ x1 + x3, data = data))
 ```
 
 
-### I. Berksons Bias
+### H. Berksons Bias
 
 Show an example of a Berksons Bias with the use of the `lm` function. Discuss the result.
 
@@ -164,7 +152,7 @@ summary(lm(x4 ~ x1, data = data[data$x3 < 0.5,]))
 ```
 
 
-### J. The True Average Causal Effect
+### I. The True Average Causal Effect
 
 Calculate the true causal effect by mimicking an intervention. 
 
