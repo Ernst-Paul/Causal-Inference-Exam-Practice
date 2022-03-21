@@ -132,7 +132,7 @@ G) $\{X_3,X_4\}$
 H) $\{X_2,X_3,X_4\}$
 
 ```{r include=FALSE}
-# B, F, G, H
+# B, E, F, G, H
 
 adjustmentSets(dag2, type = "all")
 ```
