@@ -102,9 +102,9 @@ E) 4
 length(paths(dag2)$paths)
 ```
 
-### D. Closed Paths
+### D. Open Paths
 
-How many of those path(s) are closed?
+How many of those path(s) are open?
 
 A) 0
 B) 1
