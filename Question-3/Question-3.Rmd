@@ -130,9 +130,9 @@ summary(lm(x4 ~ x1 + x3, data = data))
 ```{r include=FALSE}
 # We see that the marginal relationship and conditional relationship are 
 # different - these generally do not have to be the same. Based on my initial 
-# DAG, I believe the variable we condition on is a collider variable (x3),
-# with the result here that x1 and x4 are conditionally dependent, but 
-# marginally independent.
+# DAG, I believe the variable we condition on is a collider variable (x3).
+# The marginal relationship has a larger effect size (beta = 0.5, se = 0.01) 
+# comparatively to the conditional model (beta = 0.18, se = 0.01).
 ```
 
 
